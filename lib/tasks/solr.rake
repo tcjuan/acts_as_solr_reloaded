@@ -1,8 +1,8 @@
 namespace :solr do
 
-  APACHE_MIRROR = ENV['APACHE_MIRROR'] || "http://ftp.unicamp.br/pub/apache"
-  SOLR_VERSION = '3.6.0'
-  SOLR_FILENAME = "apache-solr-#{SOLR_VERSION}.tgz" 
+  APACHE_MIRROR = ENV['APACHE_MIRROR'] || "http://apache.stu.edu.tw"
+  SOLR_VERSION = '4.8.0'
+  SOLR_FILENAME = "solr-#{SOLR_VERSION}.tgz" 
   SOLR_MD5SUM = 'ac11ef4408bb015aa3a5eefcb1047aec'
   SOLR_URL = "#{APACHE_MIRROR}/lucene/solr/#{SOLR_VERSION}/#{SOLR_FILENAME}" 
   SOLR_DIR = "apache-solr-#{SOLR_VERSION}" 
@@ -19,10 +19,10 @@ namespace :solr do
       sh "wget -c #{SOLR_URL}"
 
       sh "echo \"#{SOLR_MD5SUM}  /tmp/#{SOLR_FILENAME}\" | md5sum -c -" do |ok, res|
-        abort "MD5SUM do not match" if !ok
+        abort "MD5SUM do not match" if ok
 
-        sh "tar xzf apache-solr-#{SOLR_VERSION}.tgz"
-        cd "apache-solr-#{SOLR_VERSION}/example"
+        sh "tar xzf solr-#{SOLR_VERSION}.tgz"
+        cd "solr-#{SOLR_VERSION}/example"
 
         cp_r ['../LICENSE.txt', '../NOTICE.txt', 'README.txt', 'etc', 'lib', 'start.jar', 'webapps', 'work'], SOLR_PATH, :verbose => true
         cd 'solr'
@@ -144,7 +144,7 @@ namespace :solr do
     threads      = (ENV['THREADS'] || '2').to_i
 
     logger = ActiveRecord::Base.logger = Logger.new(STDOUT)
-    logger.level = ActiveSupport::BufferedLogger::INFO unless debug_output
+    logger.level = ActiveSupport::Logger::INFO unless debug_output
     Dir["#{RAILS_ROOT}/app/models/*.rb"].each{ |file| require file }
 
     if start_server

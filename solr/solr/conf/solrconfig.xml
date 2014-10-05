@@ -877,10 +877,7 @@
   <!-- JSON Update Request Handler
        http://wiki.apache.org/solr/UpdateJSON
     -->
-  <requestHandler name="/update/json" 
-                  class="solr.JsonUpdateRequestHandler" 
-                  startup="lazy" />
-
+  
   <!-- Solr Cell Update Request Handler
 
        http://wiki.apache.org/solr/ExtractingRequestHandler 
@@ -1527,13 +1524,6 @@
      <queryResponseWriter name="csv" class="solr.CSVResponseWriter"/>
     -->
 
-  <queryResponseWriter name="json" class="solr.JSONResponseWriter">
-     <!-- For the purposes of the tutorial, JSON responses are written as
-      plain text so that they are easy to read in *any* browser.
-      If you expect a MIME type of "application/json" just remove this override.
-     -->
-    <str name="content-type">text/plain; charset=UTF-8</str>
-  </queryResponseWriter>
   
   <!--
      Custom response writers can be declared as needed...
